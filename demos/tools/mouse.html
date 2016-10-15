@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pan.js - Demo - Mouse</title>
+    <link rel="stylesheet" href="../src/css/style.css">
+</head>
+<body>
+
+    <div class="element move"></div>
+    <div class="element down"></div>
+    <div class="element wheel"><strong>wheel</strong></div>
+
+    <!-- Pan.js -->
+    <script src="../../builds/babel/pan.min.js"></script>
+
+    <script>
+
+        Pan.enableMouse();
+
+        Pan.mouse.on( 'move', function( position, target )
+        {
+            console.log( 'move', position );
+
+            var text = [];
+
+            text.push( '<strong>' );
+            text.push( 'move' );
+            text.push( '</strong>' );
+
+            text.push( '<table>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'x' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( position.x );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'y' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( position.y );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'ratio x' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( position.ratio.x );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'ratio y' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( position.ratio.y );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '</table>' );
+
+            // Add to DOM
+            document.querySelector( '.element.move' ).innerHTML = text.join('');
+        } );
+
+        Pan.mouse.on( 'down up', function( position, target )
+        {
+            console.log( 'down up', Pan.mouse.down );
+            // console.log( position);
+
+
+            var text = [];
+
+            text.push( '<strong>' );
+            text.push( 'down / up' );
+            text.push( '</strong>' );
+
+            text.push( '<table>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'down' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( Pan.mouse.down ? 'true' : 'false' );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '</table>' );
+
+            // Add to DOM
+            document.querySelector( '.element.down' ).innerHTML = text.join('');
+        } );
+        Pan.mouse.trigger( 'down' );
+
+        Pan.mouse.on( 'wheel', function( wheel )
+        {
+            var text = [];
+
+            console.log( 'wheel', wheel );
+
+            text.push( '<strong>' );
+            text.push( 'wheel' );
+            text.push( '</strong>' );
+
+            text.push( '<table>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'delta' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( wheel.delta );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '</table>' );
+
+            // Add to DOM
+            document.querySelector( '.element.wheel' ).innerHTML = text.join('');
+        } );
+
+    </script>
+</body>
+</html>

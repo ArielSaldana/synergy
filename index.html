@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+      <title>Synergy</title>
+
+    </head>
+    <body>      
+        <script src="/core/event_emitter.class.js"></script>
+        <script src="/tools/ticker.class.js"></script>
+        <script src="/tools/detector.class.js"></script>
+        <script src="/tools/viewport.class.js"></script>
+        <script src="/tools/mouse.class.js"></script>
+        <script src="/tools/keyboard.class.js"></script>
+        <script src="/tools/offline.class.js"></script>
+        <script src="/tools/history.class.js"></script>
+        <script src="/tools/router.class.js"></script>
+        <script src="/pan.class.js"></script>
+
+        <div>       
+            <ul>
+                <li><span syn-router-link href="/home">Home</span></li>
+                <li><a syn-router-link href="/about">About</a></li>
+                <li><a syn-router-link href="/contact">Contact</a></li>
+            </ul>
+
+        </div>
+
+        <div>
+            <div syn-router-container></div>
+        </div>
+
+       <script>
+
+            function HomeComponent () {
+                console.log('yep');        
+            }
+
+            const routes = [
+                
+                {
+                     path : '/home', title: 'Home', component: HomeComponent, children : [
+                        { path : '/test', title: 'About', component: HomeComponent, children : [
+                                { path : '/test2', title: 'Testing', component: HomeComponent }
+                            ]
+                        },
+                        { path : '/test1', title: 'About', component: HomeComponent}
+                    ]
+                },
+                { path : '/about', title: 'About', component: HomeComponent}
+            ];
+
+            Pan.router = new Router({routes});
+        </script>
+    </body>
+</html>

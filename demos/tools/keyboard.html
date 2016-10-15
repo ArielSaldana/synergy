@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pan.js - Demo - Keyboard</title>
+    <link rel="stylesheet" href="../src/css/style.css">
+</head>
+
+<body>
+
+    <div class="element"><strong>keyboard</strong></div>
+
+    <!-- Pan.js -->
+    <script src="../../builds/babel/pan.min.js"></script>
+
+    <script>
+
+        var keyboard = new Keyboard();
+
+        keyboard.on( 'down up', function( character, keycode )
+        {
+            console.log( 'is space down ', keyboard.is_down( 'space' ) );
+
+            var text = [];
+
+            text.push( '<strong>' );
+            text.push( 'keyboard' );
+            text.push( '</strong>' );
+
+            text.push( '<table>' );
+
+            text.push( '<tr>' );
+            text.push( '<td class="label">' );
+            text.push( 'downs names' );
+            text.push( '</td>' );
+            text.push( '<td class="value">' );
+            text.push( keyboard.downs );
+            text.push( '</td>' );
+            text.push( '</tr>' );
+
+            text.push( '</table>' );
+
+            // Add to DOM
+            document.querySelector( '.element' ).innerHTML = text.join('');
+
+            return false;
+        } );
+
+    </script>
+</body>
+
+</html>
