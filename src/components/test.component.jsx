@@ -1,21 +1,21 @@
 //preload views?
 
-let homeComponentInstance = null;
+let testComponentInstance = null;
 
-class HomeComponent {
+class TestComponent {
 
     constructor(route) {
 
 
-        if (!homeComponentInstance)
-            homeComponentInstance = this;
+        if (!testComponentInstance)
+            testComponentInstance = this;
 
         this.route = route;
         this.view = null;
         this.init_view();
         this.render();
 
-        return homeComponentInstance;
+        return testComponentInstance;
     }
 
     init_view() {
@@ -27,7 +27,7 @@ class HomeComponent {
                     React.createElement(
                         "span",
                         { style: { fontSize: '40px' } },
-                        "Home"
+                        "Test"
                     )
                 );
             }

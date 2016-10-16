@@ -3,7 +3,7 @@
  * @author   Ariel Saldana / http://ariel.io
  * TODO:     Add support to add options to he ajax request. (Headers)
  */
-historyInstance = null;
+let historyInstance = null;
 
 class History extends EventEmitter{
 
@@ -15,10 +15,25 @@ class History extends EventEmitter{
             historyInstance = this;
 
         this.currentState = history.state;
+        this.pathReg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+        
         this.url = null;
+        this.path = null;
         this.data = null;
 
         return historyInstance;
+    }
+
+    getPath() {
+        if (window.location.pathname) {
+            this.path = window.location.pathname;
+        }
+
+        else {
+            this.path = this.pathReg.exec( window.location.href )[1];
+        }
+
+        return this.path;
     }
 
     goBack(amount) {
