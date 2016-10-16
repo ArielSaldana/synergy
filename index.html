@@ -5,20 +5,21 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-      <title>Synergy</title>
+      <title>data-synergy</title>
 
     </head>
     <body>  
-
-        <!--<script src="/core/component.class.js"></script>-->
-        <script src="/babel/pan.min.js"></script>
-        <script src="/jsx/pan-jsx.min.js"></script>
-        
         <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
         <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
         <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
         <script src="https://unpkg.com/remarkable@1.7.1/dist/remarkable.min.js"></script>
+
+        <!--<script src="/core/component.class.js"></script>-->
+        <script src="/babel/pan.min.js"></script>
+        <script src="/jsx/pan-jsx.min.js"></script>
+        
+        
 
         <!--<script src="/core/event_emitter.class.js"></script>
         <script src="/tools/ticker.class.js"></script>
@@ -33,17 +34,17 @@
 
         <div>       
             <ul>
-                <li><span syn-router-link href="/home">Home</span></li>
-                <li><a syn-router-link href="/about">About</a></li>
-                <li><a syn-router-link href="/contact">Contact</a></li>
-                <li><a syn-router-link href="/home/test">test</a></li>
+                <li><span data-syn-router-link href="/home">Home</span></li>
+                <li><a data-syn-router-link href="/about">About</a></li>
+                <li><a data-syn-router-link href="/contact">Contact</a></li>
+                <li><a data-syn-router-link href="/home/test">test</a></li>
             </ul>
 
         </div>
 
         <div>
-            <div syn-router-container>
-                <div syn-router-container></div>
+            <div data-syn-router-container>
+                <div data-syn-router-container></div>
             </div>
         </div>
 
@@ -60,7 +61,7 @@
                         { path : '/test1', title: 'About', component: HomeComponent}
                     ]
                 },
-                { path : '/about', title: 'About', component: AboutComponent}
+                { path : '/about', title: 'About', component: HelloComponent}
             ];
 
 

@@ -64,7 +64,8 @@ gulp.task('jsx', () => {
         // 'src/components/test.jsx'
         'src/components/home.component.jsx',
         'src/components/about.component.jsx',
-        'src/components/test.component.jsx'
+        'src/components/test.component.jsx',
+        'src/components/es6.component.jsx'
     ])
         .pipe(babel({
             plugins: ['transform-react-jsx'],

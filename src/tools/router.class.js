@@ -18,8 +18,8 @@ class Router {
         this.hist = new History();
         this.currentRoute = null;
 
-        this.linkSelector = 'syn-router-link',
-            this.containerSelector = 'syn-router-container';
+        this.linkSelector = 'data-syn-router-link',
+            this.containerSelector = 'data-syn-router-container';
 
         // this.routes = [],
         this.routes = new Map(),
@@ -49,17 +49,23 @@ class Router {
         else
             level += 1;
 
-
         for (var route of routes) {
-
-            route.level = level;
+            let routeTree = [];
             let path = '';
+            route.level = level;
 
-            // if (routes.parentPath)
-            //     path += routes.parentPath;
             if (parent) {
                 path += routes.parentPath;
                 route.parent = parent;
+
+                route.componentTree = route.parent.componentTree.slice(0);
+                route.componentTree.push(route);
+
+            }
+
+            else if (!route.componentTree) {
+                routeTree.push(route);
+                route.componentTree = routeTree;
             }
 
             path += route.path;
@@ -80,7 +86,17 @@ class Router {
         }
     }
 
+    wait(ms) {
+        var start = new Date().getTime();
+        var end = start;
+        while (end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
     loadRoute(path) {
+
+        let routeViewOrder = [];
 
         if (!path)
             path = this.hist.getPath();
@@ -89,13 +105,50 @@ class Router {
         if (route = this.routes.get(path)) {
 
 
-            let route_containers = document.querySelectorAll('div[syn-router-container]');
+            let route_containers = document.querySelectorAll('div[data-syn-router-container]');
 
             if (route_containers[route.level]) {
                 this.hist.changeUrl(route.fullpath, route.title);
 
-                route.container = route_containers[route.level];
-                new route.component(route);
+                console.log(route.componentTree[0]);
+
+                route.componentTree[0].container = route_containers[route.componentTree[0].level];
+                new route.componentTree[0].component(route.componentTree[0]);
+
+                // route.componentTree[1].container = route_containers[route.componentTree[1].level];
+                // new route.componentTree[1].component(route.componentTree[1]);
+
+                // for (let virtualRoute of route.componentTree) {
+                //     console.log(virtualRoute);
+                //     virtualRoute.container = route_containers[virtualRoute.level];
+                //     new virtualRoute.component(virtualRoute);
+                // }
+
+                // route.componentTree[0]
+                // console.log(route_containers[0])
+                // new route.componentTree[0].component(route_containers[0]);
+
+                // route.container = route_containers[route.level];
+                // new route.component(route);
+
+                // for (let virtualRoute of route.componentTree) {
+                //     virtualRoute.container = route_containers[virtualRoute.level];
+                //     new virtualRoute.component(virtualRoute);
+                //     console.log(virtualRoute);
+                // }
+
+                // route.componentTree[0].container = route.componentTree[0].level;
+                // route.componentTree[0].componentTree(route.componentTree[0]);
+
+                // for ( let i = 0; i < route.level + 1; i++ ) {
+                //     route.container = route_containers[route.level];
+                //     new route.component(route);
+                // }
+
+                // for ( let i = route.level; i >= 0; i--) {
+                //     routeViewOrder.push(route);
+                // }
+
             }
 
             else {
