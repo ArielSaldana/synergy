@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/style.css">
 
-      <title>data-synergy</title>
+	<title>Synergy</title>
+</head>
 
-    </head>
-    <body>  
-        <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
-        <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
-        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-        <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
-        <script src="https://unpkg.com/remarkable@1.7.1/dist/remarkable.min.js"></script>
+<body>
+	<div id="app">
 
-        <!--<script src="/core/component.class.js"></script>-->
-        <script src="/babel/pan.min.js"></script>
-        <script src="/jsx/pan-jsx.min.js"></script>
-        
-        
+	</div>
 
-        <!--<script src="/core/event_emitter.class.js"></script>
+
+
+	<script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+	<script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://unpkg.com/remarkable@1.7.1/dist/remarkable.min.js"></script>
+
+	<!--<script src="/core/component.class.js"></script>-->
+	<script src="/babel/pan.min.js"></script>
+	<script src="/jsx/pan-jsx.min.js"></script>
+
+	<!--<script src="/core/event_emitter.class.js"></script>
         <script src="/tools/ticker.class.js"></script>
         <script src="/tools/detector.class.js"></script>
         <script src="/tools/viewport.class.js"></script>
@@ -32,40 +38,25 @@
         <script src="/tools/router.class.js"></script>
         <script src="/pan.class.js"></script>-->
 
-        <div>       
-            <ul>
-                <li><span data-syn-router-link href="/home">Home</span></li>
-                <li><a data-syn-router-link href="/about">About</a></li>
-                <li><a data-syn-router-link href="/contact">Contact</a></li>
-                <li><a data-syn-router-link href="/home/test">test</a></li>
-            </ul>
-
-        </div>
-
-        <div>
-            <div data-syn-router-container>
-                <div data-syn-router-container></div>
-            </div>
-        </div>
-
-       <script>
+	<script>
 
             const routes = [
                 
                 {
-                     path : '/home', title: 'Home', component: HomeComponent, children : [
-                        { path : '/test', title: 'About', component: TestComponent, children : [
+                     path : '/home', title: 'Home', component: Overview, children : [
+                        { path : '/test', title: 'Test!', component: HelloComponent, children : [
                                 { path : '/test2', title: 'Testing', component: HomeComponent }
                             ]
                         },
                         { path : '/test1', title: 'About', component: HomeComponent}
                     ]
                 },
-                { path : '/about', title: 'About', component: HelloComponent}
+                { path : '/release-notes', title: 'About', component: ReleaseNotes }
             ];
 
 
             Pan.router = new Router({routes});
         </script>
-    </body>
+</body>
+
 </html>

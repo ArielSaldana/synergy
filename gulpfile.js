@@ -23,6 +23,7 @@ gulp.task('babel', () => {
     return gulp.src([
         'src/core/event_emitter.class.js',
         'src/core/component.class.js',
+        'src/core/react_render.class.js',
         'src/tools/detector.class.js',
         'src/tools/keyboard.class.js',
         'src/tools/mouse.class.js',
@@ -65,7 +66,10 @@ gulp.task('jsx', () => {
         'src/components/home.component.jsx',
         'src/components/about.component.jsx',
         'src/components/test.component.jsx',
-        'src/components/es6.component.jsx'
+        'src/components/es6.component.jsx',
+        'src/components/base.component.jsx',
+        'src/components/overview.component.jsx',
+        'src/components/release-notes.component.jsx'
     ])
         .pipe(babel({
             plugins: ['transform-react-jsx'],
