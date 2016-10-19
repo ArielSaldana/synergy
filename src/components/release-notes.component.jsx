@@ -7,14 +7,35 @@ class ReleaseNotes extends React.Component {
                     <p>View the release notes here:</p>
                 </div>
                 <div id="release-notes" className="container">
+
+                
+
                     <div>
                         <div>
                             <p className="meta">
-                                <span className="release-date">10/1/2016</span>
+                                <span className="release-date">10/17/2016</span>
+                                <span className="release-version">v0.0.2</span>
+                            </p>
+                            <h2>Another Day</h2>
+                        </div>
+                        <ul className="changes">
+                            <li>
+                                <div className="change-label-container"><em className="todo">TODO</em></div>
+                                onClick event handlers not working on synergy-links because Synergy Library overrides the behavior (e.preventDefault()). Make a way to overcome this issue
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div>
+                        <div>
+                            <p className="meta">
+                                <span className="release-date">10/16/2016</span>
                                 <span className="release-version">v0.0.2</span>
                             </p>
                             <h2>Ride the Yak</h2>
                         </div>
+                        
                         <ul className="changes">
                             <li>
                                 <div className="change-label-container"><em className="added">Added</em></div>
@@ -54,7 +75,7 @@ class ReleaseNotes extends React.Component {
                     <div>
                         <div>
                             <p className="meta">
-                                <span className="release-date">10/1/2016</span>
+                                <span className="release-date">10/15/2016</span>
                                 <span className="release-version">v0.0.1</span>
                             </p>
                             <h2>Pilot</h2>

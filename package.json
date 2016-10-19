@@ -17,7 +17,6 @@
     "express" : "4.14.0"
   },
   "scripts": {
-    "build": "babel src -d src",
     "compile": "node node_modules/gulp/bin/gulp"
   },
   "repository": {
