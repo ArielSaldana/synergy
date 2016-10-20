@@ -3,23 +3,43 @@ class BaseComponent extends React.Component {
     constructor() {
         super();
 
+        this.state = {
+            liked: false,
+            link: null
+        }
+
+        this.hist = new History();
+
         this.handleClick = this.handleClick.bind(this);
+        this.onSelectLink = this.onSelectLink.bind(this);
+
     }
 
-
-    handleClick() {
-        console.log('moo');
+    handleClick(e) {
+        // e = e || window.event;
+        // e.target || e.srcElement; 
+        // console.log(e.target);
+        console.log(e.currentTarget);
     }
 
-    // renderLinks() {
-    //     for (let link of this.links) {
-    //         return 
-    //     }
-    // }
+    onSelectLink(link) {
+        this.setState({ link: link });
+    }
 
+    findActive() {
+        let path = this.hist.getPath();
+        for (let link of this.props.links) {
+            if (link.url === path) {
+                this.onSelectLink(link);
+            }
+        }
+    }
+
+    componentWillMount() {
+        this.findActive();
+    }
 
     render() {
-
         return (
 
             <div>
@@ -31,11 +51,13 @@ class BaseComponent extends React.Component {
                     </div>
                     <div className="navigation">
                         <ul>
+
                             {
-                                this.props.links.map(function(val, i){
-                                return <li key={i}><a data-syn-router-link href={'' + val.url}>{val.name}</a></li>;
-                            })}
-                            
+                                this.props.links.map((val, i) => {
+                                    return <li className={this.state.link === val ? 'active' : ''} onClick={this.onSelectLink.bind(null, val)} key={i}><a data-syn-router-link href={'' + val.url}>{val.name}</a></li>;
+                                })
+                            }
+
                         </ul>
                     </div>
                 </header>
@@ -48,16 +70,18 @@ class BaseComponent extends React.Component {
 }
 
 BaseComponent.propTypes = {
-     name : React.PropTypes.string,
-     links : React.PropTypes.array
+    name: React.PropTypes.string,
+    links: React.PropTypes.array,
+    active: React.PropTypes.string
 }
 
 BaseComponent.defaultProps = {
-    name : 'Ariel',
-    links : [ 
-        { name: 'Overview', url : '/home', id: 1 },
-        { name: 'Release Notes', url : '/release-notes', id : 2}
-    ]
-    
+    name: 'Ariel',
+    links: [
+        { name: 'Overview', url: '/home', id: 1 },
+        { name: 'Release Notes', url: '/release-notes', id: 2 }
+    ],
+    active: null
+
 }
 

@@ -1,4 +1,47 @@
 class ReleaseNotes extends React.Component {
+
+    constructor() {
+        super();
+
+        this.ajax = new Ajax();
+
+        this.state = {
+            notes: [],
+        }
+    }
+
+    componentWillMount() {
+
+        // this.ajax.getJSON('/release-notes.json', function (test) {
+        //     console.log(test);
+        // });
+
+        // this.ajax.get('/release-notes.json').then(
+        //     (value) => {
+        //         this.setNotes(value);
+        //     },
+        //     function (reason) {
+        //         console.error(reason);
+        //     }
+        // )
+    }
+
+
+    componentDidMount() {
+        this.ajax.get('/release-notes.json').then(
+            (value) => {
+                this.setNotes(value.releaseNotes);
+            },
+            function (reason) {
+                console.error(reason);
+            }
+        )
+    }
+
+    setNotes(notes) {
+        this.setState({ notes: notes });
+    }
+
     render() {
         return (
             <section className="release-notes">
@@ -8,103 +51,38 @@ class ReleaseNotes extends React.Component {
                 </div>
                 <div id="release-notes" className="container">
 
-                
+                    {
+                        this.state.notes.map((val, i) => {
+                            return (
+                                <div key={i}>
+                                    <div>
+                                        <p className="meta">
+                                            <span className="release-date">{val.date}</span>
+                                            <span className="release-version">{val.version}</span>
+                                        </p>
+                                        <h2>{val.title}</h2>
+                                    </div>
+                                    <ul className="changes">
+                                        {
+                                            val.updates.map((update, i2) => {
+                                                return (
+                                                    <li key={i2}>
+                                                        <div className="change-label-container"><em className={update.type}>{update.type}</em></div>
+                                                        {update.data}
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    
+                                    </ul>
+                                </div>
+                            
+                            );
+                        })
+                    }
 
-                    <div>
-                        <div>
-                            <p className="meta">
-                                <span className="release-date">10/17/2016</span>
-                                <span className="release-version">v0.0.2</span>
-                            </p>
-                            <h2>Another Day</h2>
-                        </div>
-                        <ul className="changes">
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                onClick event handlers not working on synergy-links because Synergy Library overrides the behavior (e.preventDefault()). Make a way to overcome this issue
-                            </li>
-                        </ul>
                     </div>
-
-
-                    <div>
-                        <div>
-                            <p className="meta">
-                                <span className="release-date">10/16/2016</span>
-                                <span className="release-version">v0.0.2</span>
-                            </p>
-                            <h2>Ride the Yak</h2>
-                        </div>
-                        
-                        <ul className="changes">
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added Router
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added History
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="updated">Updated</em></div>
-                                Updated router to support loading components based on url. 
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                Base url (redirect and load Component)
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                OnClick events on component elements (such as making a link element active after clicking on it).
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                Attach data to components using props (data such as ajax content).
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                Add Error handling.
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="todo">TODO</em></div>
-                                Server side rendering (So we can stop depending on the client side code to render the webpage). Also adds SEO benefits.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <div>
-                            <p className="meta">
-                                <span className="release-date">10/15/2016</span>
-                                <span className="release-version">v0.0.1</span>
-                            </p>
-                            <h2>Pilot</h2>
-                        </div>
-                        <ul className="changes">
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added mouse events functionality.
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added keyboard events functionality.
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added browser dectection using the detector component.
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added offline detection functionality.
-                            </li>
-                            <li>
-                                <div className="change-label-container"><em className="added">Added</em></div>
-                                Added timer functionality. This has many uses, especially in applications that require high performance. Also supports request animation frame (Currently no polyfill for older browsers).
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+            </section >
 
         );
     }

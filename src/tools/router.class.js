@@ -19,6 +19,8 @@ class Router {
         this.hist = new History();
         this.currentRoute = null;
 
+        this.basePath = this.hist.getBasePath() ? this.hist.getBasePath() : '';
+
         this.linkSelector = 'data-syn-router-link',
             this.containerSelector = 'data-syn-router-container';
 
@@ -33,17 +35,20 @@ class Router {
     }
 
     init() {
-        if (!this.loaded  || React) {
+        if (!this.loaded || React) {
             ReactDOM.render(React.createElement(BaseComponent, null), document.getElementById('app'));
         }
         this.initRouterLinks();
         this.mapRoutes(this.options.routes);
-        this.initRouteViews();
-
 
         for (var route of this.routes) {
             console.log(route);
         }
+
+        this.initRouteViews();
+
+
+      
 
     }
 
@@ -65,7 +70,6 @@ class Router {
 
                 route.componentTree = route.parent.componentTree.slice(0);
                 route.componentTree.push(route);
-
             }
 
             else if (!route.componentTree) {
@@ -74,9 +78,14 @@ class Router {
             }
 
             path += route.path;
-            route.fullpath = path;
+            // route.fullpath = path;
 
-            this.routes.set(path, route);
+
+            route.fullpath = this.basePath + path;
+
+
+
+            this.routes.set(this.basePath + path, route);
 
             if (route.children) {
                 route.children.parentPath = path;
@@ -107,21 +116,21 @@ class Router {
             path = this.hist.getPath();
 
         let route = null;
-        if (route = this.routes.get(path)) {
+        let redirect = null;
+
+        // check for naked path, and path with basePath attached
+        if (route = this.routes.get( path) ? this.routes.get(path) : this.routes.get(this.basePath + path)) {
+
+            if (redirect = route.redirectTo) {
+                this.loadRoute(redirect);
+                return;
+            }
 
             new ReactRenderer(route);
             this.hist.changeUrl(route.fullpath, route.title);
-            // let route_containers = document.querySelectorAll('div[data-syn-router-container]');
 
-            // if (route_containers[route.level]) {
-            //     this.hist.changeUrl(route.fullpath, route.title);
-            //     new ReactRenderer(route);
-            // }
-
-            // else {
-            //     throw new Error('Route container not found.');
-            // }
         }
+
         else {
             throw new Error('That is not a known link.');
         }
@@ -134,6 +143,8 @@ class Router {
         var links = document.querySelectorAll('[' + this.linkSelector + ']');
 
         for (var link of links) {
+            let setLink = this.basePath + link.getAttribute('href');
+            link.setAttribute('href', setLink);
 
             link.addEventListener('click', (e) => {
                 this.linkClinked(e);
@@ -143,7 +154,7 @@ class Router {
 
     linkClinked(e, history) {
 
-        e.stopPropagation();
+        // e.stopPropagation();
         e.preventDefault();
 
         let path = e.target.getAttribute('href');

@@ -32,6 +32,7 @@ gulp.task('babel', () => {
         'src/tools/offline.class.js',
         'src/tools/history.class.js',
         'src/tools/router.class.js',
+        'src/tools/ajax.class.js',
         'src/pan.class.js'
     ])
         .pipe(babel({
@@ -52,6 +53,7 @@ gulp.task('es6', () => {
         'src/tools/mouse.class.js',
         'src/tools/ticker.class.js',
         'src/tools/viewport.class.js',
+        'src/tools/ajax.class.js',
         'src/pan.class.js'
     ])
         .pipe(concat('pan' + '.js'))

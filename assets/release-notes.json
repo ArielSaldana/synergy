@@ -1,0 +1,41 @@
+{
+        "releaseNotes" : [
+            {
+                "title" : "Another Day",
+                "date" : "10/17/2016",
+                "version" : "v0.0.2",
+                "updates" : [
+                    {"type" : "todo", "data" : "onClick event handlers not working on synergy-links because Synergy Library overrides the behavior (e.preventDefault()). Make a way to overcome this issue"}
+                ]
+
+            },
+            {
+                "title" : "Ride the Yak",
+                "date" : "10/17/2016",
+                "version" : "v0.0.2",
+                "updates" : [
+                    {"type" : "added", "data" : "Added Router"},
+                    {"type" : "added", "data" : "Added History"},
+                    {"type" : "updated", "data" : "Updated router to support loading components based on url."},
+                    {"type" : "todo", "data" : "Base url (redirect and load Component)"},
+                    {"type" : "todo", "data" : "OnClick events on component elements (such as making a link element active after clicking on it)."},
+                    {"type" : "todo", "data" : "Attach data to components using props (data such as ajax content)."},
+                    {"type" : "todo", "data" : "Add Error handling."},
+                    {"type" : "todo", "data" : "Server side rendering (So we can stop depending on the client side code to render the webpage). Also adds SEO benefits."}
+                ]
+            },
+            {
+                "title" : "Pilot",
+                "date" : "10/15/2016",
+                "version" : "v0.0.1",
+                "updates" : [
+                    {"type" : "added", "data" : "Added mouse events functionality."},
+                    {"type" : "added", "data" : "Added keyboard events functionality."},
+                    {"type" : "added", "data" : "Added browser dectection using the detector component."},
+                    {"type" : "added", "data" : "Added offline detection functionality."},
+                    {"type" : "added", "data" : "Added timer functionality. This has many uses, especially in applications that require high performance. Also supports request animation frame (Currently no polyfill for older browsers)."}
+                ]
+
+            }
+        ]
+}
