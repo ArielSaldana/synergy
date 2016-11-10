@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/clear-master/css/main.css">
+    <link rel="stylesheet" href="/clear-master/css/style.css">
     <base href="/synergy">
 
 	<title>Synergy</title>
@@ -16,46 +16,16 @@
 
 	</div>
 
-
-
 	<script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
 	<script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
 
-	<!--<script src="/core/component.class.js"></script>-->
-	<script src="/babel/pan.min.js"></script>
-	<script src="/jsx/pan-jsx.min.js"></script>
+	<script src="/builds/babel/synergy.min.js"></script>
+	<script src="/builds/jsx/synergy-jsx.min.js"></script>
 
-	<!--<script src="/core/event_emitter.class.js"></script>
-        <script src="/tools/ticker.class.js"></script>
-        <script src="/tools/detector.class.js"></script>
-        <script src="/tools/viewport.class.js"></script>
-        <script src="/tools/mouse.class.js"></script>
-        <script src="/tools/keyboard.class.js"></script>
-        <script src="/tools/offline.class.js"></script>
-        <script src="/tools/history.class.js"></script>
-        <script src="/tools/router.class.js"></script>
-        <script src="/pan.class.js"></script>-->
 
 	<script>
-
-            const routes = [
-                
-                {
-                     path : '/home', title: 'Home', component: Overview, children : [
-                        { path : '/test', title: 'Test!', component: HelloComponent, children : [
-                                { path : '/test2', title: 'Testing', component: HomeComponent }
-                            ]
-                        },
-                        { path : '/test1', title: 'About', component: HomeComponent}
-                    ]
-                },
-                { path : '/release-notes', title: 'About', component: ReleaseNotes },
-                { path : '/', redirectTo : '/home'}
-            ];
-
-
-            Pan.router = new Router({routes});
-        </script>
+        S.app = new App();
+    </script>
 </body>
 
 </html>

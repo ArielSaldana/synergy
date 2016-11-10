@@ -29,10 +29,14 @@ class Offline extends EventEmitter {
         return offlineInstance;
     }
 
+    /**
+     * Listen to events
+     * @return {object} Context
+     */
     listen_to_events() {
-        // online
-        var change = () => {
 
+        var change = () => {
+            // Online
             if (navigator.onLine) {
                 if (this.options.classes.active) {
                     this.options.classes.target.classList.remove(this.options.classes.offline);
@@ -47,6 +51,7 @@ class Offline extends EventEmitter {
                 this.trigger('change', [this.status]);
             }
 
+            // Offline
             else {
                 if (this.options.classes.active) {
                     this.options.classes.target.classList.remove(this.options.classes.online);

@@ -2,13 +2,19 @@
  * @class  Detector
  * @author Ariel Saldana / http://ariel.io
  */
+
+
 let detectorInstance = null;
 
 class Detector {
     constructor (options) {
-        // super(options);
+
         if (!detectorInstance) {
             detectorInstance = this;
+        }
+
+        else {
+            return detectorInstance;
         }
         
         this.options = {};
@@ -20,8 +26,14 @@ class Detector {
         
         return detectorInstance;
     }
+
+    /**
+     * Detect engine, browser, system and feature in a specified list and store in 'detect' property
+     * @return {object} Context
+     */
     
     init_detection () {
+
         // Prepare
         var engine = {
             ie      : 0,
@@ -63,6 +75,7 @@ class Detector {
             media_query : false
         };
         
+        // Detect
         var user_agent = navigator.userAgent;
         
         if (window.opera) 
@@ -216,7 +229,11 @@ class Detector {
         this.features   = features;
         this.categories = [ 'engine', 'browser', 'system', 'features' ]; 
     }
-    
+
+    /**
+     * Add detected informations to the DOM (on <html> by default)
+     * @return {object} Context
+     */
     init_classes() {
         // Don't add
         if( !this.options.targets || this.options.targets.length === 0 )

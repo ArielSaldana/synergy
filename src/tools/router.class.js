@@ -25,6 +25,7 @@ class Router {
             this.containerSelector = 'data-syn-router-container';
 
         // this.routes = [],
+        // our route map
         this.routes = new Map(),
             this.mode = null,
             this.root = '/';
@@ -34,6 +35,9 @@ class Router {
         return routerInstance;
     }
 
+    /**
+     * initialize
+     */
     init() {
         if (!this.loaded || React) {
             ReactDOM.render(React.createElement(BaseComponent, null), document.getElementById('app'));
@@ -41,17 +45,13 @@ class Router {
         this.initRouterLinks();
         this.mapRoutes(this.options.routes);
 
-        for (var route of this.routes) {
-            console.log(route);
-        }
-
         this.initRouteViews();
-
-
-      
 
     }
 
+    /**
+     * Make a map of the routes and insert it into an array
+     */
     mapRoutes(routes, level, parent) {
 
         if (level == undefined || level == null)
@@ -79,11 +79,7 @@ class Router {
 
             path += route.path;
             // route.fullpath = path;
-
-
             route.fullpath = this.basePath + path;
-
-
 
             this.routes.set(this.basePath + path, route);
 
@@ -94,20 +90,18 @@ class Router {
         }
     }
 
+    /**
+     * Initialize route views
+     */
     initRouteViews() {
         if (this.currentRoute == null) {
             this.loadRoute();
         }
     }
 
-    wait(ms) {
-        var start = new Date().getTime();
-        var end = start;
-        while (end < start + ms) {
-            end = new Date().getTime();
-        }
-    }
-
+    /**
+     * attempt to load a route
+     */
     loadRoute(path) {
 
         let routeViewOrder = [];
@@ -137,8 +131,9 @@ class Router {
 
     }
 
-    // link & link events
-
+    /**
+     * Initialize links and link events
+     */
     initRouterLinks() {
         var links = document.querySelectorAll('[' + this.linkSelector + ']');
 
@@ -152,6 +147,10 @@ class Router {
         }
     }
 
+
+    /**
+     * router link was clicked
+     */
     linkClinked(e, history) {
 
         // e.stopPropagation();
@@ -161,7 +160,5 @@ class Router {
         this.loadRoute(path);
 
     }
-
-
 
 }

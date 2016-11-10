@@ -14,10 +14,6 @@ class Ajax {
         // return ajaxInstance;
     }
 
-    test() {
-        console.log('test');
-    }
-
     getJSON(url, success, error) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -33,6 +29,11 @@ class Ajax {
         xhr.send();
     }
 
+    /**
+     * Get content
+     * @return {promise} Context
+     */
+
     get(url) {
         return new Promise(
             function (resolve, reject) {
@@ -41,8 +42,7 @@ class Ajax {
                     if (request.readyState === 4) {
                         if (this.status === 200) {
                             // Success
-                            // resolve(this.response);
-                            resolve(JSON.parse(request.responseText));
+                            resolve(this.response);
                         } else {
                             // Something went wrong (404 etc.)
                             reject(new Error(this.statusText));
@@ -56,6 +56,28 @@ class Ajax {
                 request.open('GET', url);
                 request.send();
             });
+    }
+
+    /**
+     * Get a JSON object
+     * @return {promise} Context
+     */
+
+    getJson(url) {
+        return new Promise(
+            (resolve, reject) => {
+                this.get(url).then(
+                    (value) => {
+                        resolve(JSON.parse(value));
+                    },
+                    function (reason) {
+                        console.error(reason);
+                        reject(new Error(reason));
+                    }
+                )
+            }
+        )
+
     }
 
 }

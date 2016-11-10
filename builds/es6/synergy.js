@@ -270,13 +270,19 @@ class Component {
  * @class  Detector
  * @author Ariel Saldana / http://ariel.io
  */
+
+
 let detectorInstance = null;
 
 class Detector {
     constructor (options) {
-        // super(options);
+
         if (!detectorInstance) {
             detectorInstance = this;
+        }
+
+        else {
+            return detectorInstance;
         }
         
         this.options = {};
@@ -288,8 +294,14 @@ class Detector {
         
         return detectorInstance;
     }
+
+    /**
+     * Detect engine, browser, system and feature in a specified list and store in 'detect' property
+     * @return {object} Context
+     */
     
     init_detection () {
+
         // Prepare
         var engine = {
             ie      : 0,
@@ -331,6 +343,7 @@ class Detector {
             media_query : false
         };
         
+        // Detect
         var user_agent = navigator.userAgent;
         
         if (window.opera) 
@@ -484,7 +497,11 @@ class Detector {
         this.features   = features;
         this.categories = [ 'engine', 'browser', 'system', 'features' ]; 
     }
-    
+
+    /**
+     * Add detected informations to the DOM (on <html> by default)
+     * @return {object} Context
+     */
     init_classes() {
         // Don't add
         if( !this.options.targets || this.options.targets.length === 0 )
@@ -586,131 +603,137 @@ class Detector {
  */
 let keyboardInstance = null;
 
+/**
+ * Initialise and merge options
+ * @constructor
+ * @param {object} options Properties to merge with defaults
+ */
+
 class Keyboard extends EventEmitter {
+
     constructor(options) {
+
         super(options);
-        
+
         if (!keyboardInstance) {
+
             keyboardInstance = this;
         }
-        
+
         this.options = {};
         this.keycode_names = {
-            91 : 'cmd',
-            17 : 'ctrl',
-            32 : 'space',
-            16 : 'shift',
-            18 : 'alt',
-            20 : 'caps',
-            9  : 'tab',
-            13 : 'enter',
-            8  : 'backspace',
-            38 : 'up',
-            39 : 'right',
-            40 : 'down',
-            37 : 'left',
-            27 : 'esc'
+            91: 'cmd',
+            17: 'ctrl',
+            32: 'space',
+            16: 'shift',
+            18: 'alt',
+            20: 'caps',
+            9: 'tab',
+            13: 'enter',
+            8: 'backspace',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+            37: 'left',
+            27: 'esc'
         }
-        
+
         this.downs = [];
         this.listen_to_events();
-        
+
         return keyboardInstance;
     }
-    
+
     /**
      * Listen to events
      * @return {object} Context
      */
-    listen_to_events () {
-        
+    listen_to_events() {
+
         //down
         var keydown_handle = (e) => {
-            var character = this.keycode_to_character (e.keyCode);
-            
-            if (this.downs.indexOf( character) === -1)
+            var character = this.keycode_to_character(e.keyCode);
+
+            if (this.downs.indexOf(character) === -1)
                 this.downs.push(character);
-                
-            if (this.trigger('down', [e.keyCode, character]) === false)
-            {
+
+            if (this.trigger('down', [e.keyCode, character]) === false) {
                 e = e || window.event;
-                
+
                 if (e.preventDefault)
                     e.preventDefault();
                 else
                     e.returnValue = false;
             }
         }
-        
+
+        // Up
         var keyup_handle = (e) => {
-           var character = this.keycode_to_character(e.character);
-           
-           if (this.downs.indexOf(character) !== -1)
-                this.downs.splice(this.downs.indexOf(character),1);
-                
-           this.trigger('up', [e.keyCode, character]);
+            var character = this.keycode_to_character(e.character);
+
+            if (this.downs.indexOf(character) !== -1)
+                this.downs.splice(this.downs.indexOf(character), 1);
+
+            this.trigger('up', [e.keyCode, character]);
         }
-        
+
         // Listen
-        if (document.addEventListener)
-        {
-            document.addEventListener( 'keydown', keydown_handle, false );
-            document.addEventListener( 'keyup', keyup_handle, false );
+        if (document.addEventListener) {
+            document.addEventListener('keydown', keydown_handle, false);
+            document.addEventListener('keyup', keyup_handle, false);
         }
-        else
-        {
-            document.attachEvent( 'onkeydown', keydown_handle, false );
-            document.attachEvent( 'onkeyup', keyup_handle, false );
+        else {
+            document.attachEvent('onkeydown', keydown_handle, false);
+            document.attachEvent('onkeyup', keyup_handle, false);
         }
 
         return this;
     }
-    
+
     /**
      * Convert a keycode to a char
      * @param  {integer} input Original keycode
      * @return {string}        Output
      */
-    keycode_to_character (input) {
+    keycode_to_character(input) {
         var output = this.keycode_names[input];
         if (!output)
             output = String.fromCharCode(input).toLowerCase();
-            
+
         return output;
     }
-    
+
     /**
      * Test if keys are down
      * @param  {array} inputs Array of char to test as strings
      * @return {boolean}      True if every keys are down
      */
-    are_down (inputs) {
+    are_down(inputs) {
         var down = true;
-        
-        for( var i = 0; i < inputs.length; i++ )
-        {
-            var key = inputs[ i ];
 
-            if( typeof key === 'number' )
-                key = this.keycode_to_character( key );
+        for (var i = 0; i < inputs.length; i++) {
+            var key = inputs[i];
 
-            if( this.downs.indexOf( key ) === -1 )
+            if (typeof key === 'number')
+                key = this.keycode_to_character(key);
+
+            if (this.downs.indexOf(key) === -1)
                 down = false;
         }
 
         return down;
-        
+
     }
-    
+
     /**
      * Test if key is down
      * @param  {string}  input Char as string
      * @return {boolean}       True if key is down
      */
-     is_down (input) {
-         return this.are_down([input]);
-     }
-    
+    is_down(input) {
+        return this.are_down([input]);
+    }
+
 }
 /**
  * @class    Mouse
@@ -724,90 +747,90 @@ class Keyboard extends EventEmitter {
 let mouseInstance = null;
 
 class Mouse extends EventEmitter {
-    constructor ( options )
-    {
+    constructor(options) {
         super(options);
-        
+
         if (!mouseInstance) {
             mouseInstance = this;
         }
-        
+
         this.options = {};
-        
-        this.viewport         = new Viewport();
-        this.down             = false;
-        this.position         = {};
-        this.position.x       = 0;
-        this.position.y       = 0;
-        this.position.ratio   = {};
+
+        this.viewport = new Viewport();
+        this.down = false;
+        this.position = {};
+        this.position.x = 0;
+        this.position.y = 0;
+        this.position.ratio = {};
         this.position.ratio.x = 0;
         this.position.ratio.y = 0;
-        this.wheel            = {};
-        this.wheel.delta      = 0;
+        this.wheel = {};
+        this.wheel.delta = 0;
 
         this.listen_to_events();
-        
+
         return mouseInstance;
     }
-    
+
+    /**
+     * Listen to events
+     * @return {object} Context
+     */
+
     listen_to_events() {
+        // Down
         var mouse_down_handle = (e) => {
             this.down = true;
-            
-            if (this.trigger('down',[this.position, e.target])=== false)
-            {
+
+            if (this.trigger('down', [this.position, e.target]) === false) {
                 e.preventDefault();
             }
         }
-        
+        // Up
         var mouse_up_handle = (e) => {
             this.down = false;
-            
+
             this.trigger('up', [this.position, e.target]);
         }
-        
+
+        // Move
         var mouse_move_handle = (e) => {
             this.position.x = e.clientX;
             this.position.y = e.clientY;
-            
+
             this.position.ratio.x = this.position.x / this.viewport.width;
             this.position.ratio.y = this.position.y / this.viewport.height;
-            
-            this.trigger( 'move', [ this.position, e.target]);
+
+            this.trigger('move', [this.position, e.target]);
         }
-        
+
+        // Wheel
         var mouse_wheel_handle = (e) => {
             this.wheel.delta = e.wheelDeltaY || e.wheelDelta || -e.detail;
-            
-            if (this.trigger ('wheel', [this.wheel]) === false)
-            {
+
+            if (this.trigger('wheel', [this.wheel]) === false) {
                 e.preventDefault();
                 return false;
             }
         }
-        
+
         // Listen
-        if (document.addEventListener)
-        {
-            document.addEventListener( 'mousedown', mouse_down_handle, false );
-            document.addEventListener( 'mouseup', mouse_up_handle, false );
-            document.addEventListener( 'mousemove', mouse_move_handle, false );
-            document.addEventListener( 'mousewheel', mouse_wheel_handle, false );
-            document.addEventListener( 'DOMMouseScroll', mouse_wheel_handle, false );
+        if (document.addEventListener) {
+            document.addEventListener('mousedown', mouse_down_handle, false);
+            document.addEventListener('mouseup', mouse_up_handle, false);
+            document.addEventListener('mousemove', mouse_move_handle, false);
+            document.addEventListener('mousewheel', mouse_wheel_handle, false);
+            document.addEventListener('DOMMouseScroll', mouse_wheel_handle, false);
         }
-        else
-        {
-            document.attachEvent( 'onmousedown', mouse_down_handle, false );
-            document.attachEvent( 'onmouseup', mouse_up_handle, false );
-            document.attachEvent( 'onmousemove', mouse_move_handle, false );
-            document.attachEvent( 'onmousewheel', mouse_wheel_handle, false );
+        else {
+            document.attachEvent('onmousedown', mouse_down_handle, false);
+            document.attachEvent('onmouseup', mouse_up_handle, false);
+            document.attachEvent('onmousemove', mouse_move_handle, false);
+            document.attachEvent('onmousewheel', mouse_wheel_handle, false);
         }
 
         return this;
-        
-        
-        
-        
+
     }
 }
 /**
@@ -1278,10 +1301,6 @@ class Ajax {
         // return ajaxInstance;
     }
 
-    test() {
-        console.log('test');
-    }
-
     getJSON(url, success, error) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -1297,6 +1316,11 @@ class Ajax {
         xhr.send();
     }
 
+    /**
+     * Get content
+     * @return {promise} Context
+     */
+
     get(url) {
         return new Promise(
             function (resolve, reject) {
@@ -1305,8 +1329,7 @@ class Ajax {
                     if (request.readyState === 4) {
                         if (this.status === 200) {
                             // Success
-                            // resolve(this.response);
-                            resolve(JSON.parse(request.responseText));
+                            resolve(this.response);
                         } else {
                             // Something went wrong (404 etc.)
                             reject(new Error(this.statusText));
@@ -1322,33 +1345,57 @@ class Ajax {
             });
     }
 
+    /**
+     * Get a JSON object
+     * @return {promise} Context
+     */
+
+    getJson(url) {
+        return new Promise(
+            (resolve, reject) => {
+                this.get(url).then(
+                    (value) => {
+                        resolve(JSON.parse(value));
+                    },
+                    function (reason) {
+                        console.error(reason);
+                        reject(new Error(reason));
+                    }
+                )
+            }
+        )
+
+    }
+
 }
 /**
- * @class    pan
+ * @class    Synergy
  * @author   Ariel Saldana / http://ariel.io
  */
-var Pan = {};
+var Synergy = {};
 
-Pan.enableMouse = function(){
-    Pan.mouse = new Mouse();
+Synergy.enableMouse = function(){
+    Synergy.mouse = new Mouse();
 }
 
-Pan.enableKeyboard = function(){
-    Pan.keyboard = new Keyboard();
+Synergy.enableKeyboard = function(){
+    Synergy.keyboard = new Keyboard();
 }
 
-Pan.enableViewport = function(){
-    Pan.viewport = new Viewport();
+Synergy.enableViewport = function(){
+    Synergy.viewport = new Viewport();
 }
 
-Pan.enableTicker = function(){
-    Pan.ticker = new Ticker();
+Synergy.enableTicker = function(){
+    Synergy.ticker = new Ticker();
 }
 
 
-Pan.enableTools = function() {
-    Pan.viewport = new Viewport();
-    Pan.keyboard = new Keyboard();
-    Pan.mouse = new Mouse();
-    Pan.ticker = new Ticker();
+Synergy.enableTools = function() {
+    Synergy.viewport = new Viewport();
+    Synergy.keyboard = new Keyboard();
+    Synergy.mouse = new Mouse();
+    Synergy.ticker = new Ticker();
 }
+
+var S = Synergy;

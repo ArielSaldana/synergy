@@ -12,23 +12,11 @@ class ReleaseNotes extends React.Component {
 
     componentWillMount() {
 
-        // this.ajax.getJSON('/release-notes.json', function (test) {
-        //     console.log(test);
-        // });
-
-        // this.ajax.get('/release-notes.json').then(
-        //     (value) => {
-        //         this.setNotes(value);
-        //     },
-        //     function (reason) {
-        //         console.error(reason);
-        //     }
-        // )
     }
 
 
     componentDidMount() {
-        this.ajax.get('/release-notes.json').then(
+        this.ajax.getJson('/assets/release-notes.json').then(
             (value) => {
                 this.setNotes(value.releaseNotes);
             },
@@ -73,17 +61,14 @@ class ReleaseNotes extends React.Component {
                                                 )
                                             })
                                         }
-                                    
                                     </ul>
                                 </div>
-                            
                             );
                         })
                     }
 
-                    </div>
+                </div>
             </section >
-
         );
     }
 }

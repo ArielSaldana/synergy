@@ -33,12 +33,12 @@ gulp.task('babel', () => {
         'src/tools/history.class.js',
         'src/tools/router.class.js',
         'src/tools/ajax.class.js',
-        'src/pan.class.js'
+        'src/synergy.class.js'
     ])
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(concat('pan' + '.js'))
+        .pipe(concat('synergy' + '.js'))
         .pipe(rename({ extname: '.min.js' }))
         .pipe(uglify())
         .pipe(gulp.dest(options.paths.destinationBabel));
@@ -54,9 +54,9 @@ gulp.task('es6', () => {
         'src/tools/ticker.class.js',
         'src/tools/viewport.class.js',
         'src/tools/ajax.class.js',
-        'src/pan.class.js'
+        'src/synergy.class.js'
     ])
-        .pipe(concat('pan' + '.js'))
+        .pipe(concat('synergy' + '.js'))
         .pipe(gulp.dest(options.paths.destinationES6))
         .pipe(rename({ extname: '.min.js' }));
     // .pipe(uglify());
@@ -65,20 +65,22 @@ gulp.task('es6', () => {
 gulp.task('jsx', () => {
     return gulp.src([
         // 'src/components/test.jsx'
-        'src/components/home.component.jsx',
-        'src/components/about.component.jsx',
-        'src/components/test.component.jsx',
-        'src/components/es6.component.jsx',
-        'src/components/base.component.jsx',
-        'src/components/overview.component.jsx',
-        'src/components/release-notes.component.jsx'
+        // 'src/components/home.component.jsx',
+        // 'src/components/about.component.jsx',
+        // 'src/components/test.component.jsx',
+        // 'src/components/es6.component.jsx',
+        // 'src/components/base.component.jsx',
+        // 'src/components/overview.component.jsx',
+        // 'src/components/release-notes.component.jsx'
+        'app/**'
     ])
         .pipe(babel({
             plugins: ['transform-react-jsx'],
+            presets: ['es2015']
         }))
-        .pipe(concat('pan-jsx' + '.js'))
+        .pipe(concat('synergy-jsx' + '.js'))
         .pipe(rename({ extname: '.min.js' }))
-        // .pipe(uglify())
+        .pipe(uglify())
         .pipe(gulp.dest(options.paths.destinationjsx));
 });
 
