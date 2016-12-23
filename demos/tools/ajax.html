@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pan.js - Demo - Ajax</title>
+    <title>Synergy.js - Demo - Ajax</title>
     <link rel="stylesheet" href="../src/css/style.css">
     <style>
 
@@ -10,23 +10,35 @@
 </head>
 <body>
 
-    <!-- Pan.js -->
-    <script src="../../builds/babel/pan.min.js"></script>
+    <!-- Synergy.js -->
+    <script src="../../builds/babel/synergy.min.js"></script>
 
     <script>
-    var ajax = new Pan.Tools.Ajax();
+    // var ajax = new Synergy.Tools.Ajax();
+    var ajax = new Ajax();
 
+    // ajax.getJson('http://jsonplaceholder.typicode.com/posts/1', function(err, callback){
+    //   if (!err) {
+    //     console.log(callback);
+    //   }
+    // });
 
-    ajax.getJson('http://jsonplaceholder.typicode.com/posts/1', function(err, callback){
-      if (!err) {
-        console.log(callback);
-      }
+    // ajax.getJson('http://jsonplaceholder.typicode.com/comments?postId=1', function(err, callback){
+    //   if (!err) {
+    //     console.log(callback);
+    //   }
+    // });
+
+    ajax.getJson('http://jsonplaceholder.typicode.com/posts/1').then(function(data){
+      console.log(data);
     });
 
-    ajax.getJson('http://jsonplaceholder.typicode.com/comments?postId=1', function(err, callback){
-      if (!err) {
-        console.log(callback);
-      }
+    ajax.getJson('http://jsonplaceholder.typicode.com/comments?postId=1').then(function(data){
+      console.log(data);
+    }, 
+    
+    function(error){
+
     });
     // console.log(ajax.getJson('http://jsonplaceholder.typicode.com/posts/1').request)
     // ajax.getJson('http://unreal.io/work');

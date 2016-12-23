@@ -38,7 +38,7 @@ gulp.task('babel', () => {
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(concat('synergy' + '.js'))
+        .pipe(concat('synergy-react' + '.js'))
         .pipe(rename({ extname: '.min.js' }))
         .pipe(uglify())
         .pipe(gulp.dest(options.paths.destinationBabel));

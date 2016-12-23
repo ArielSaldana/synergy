@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pan.js - Demo - Mouse</title>
+    <title>Synergy.js - Demo - Mouse</title>
     <link rel="stylesheet" href="../src/css/style.css">
 </head>
 <body>
@@ -11,14 +11,14 @@
     <div class="element down"></div>
     <div class="element wheel"><strong>wheel</strong></div>
 
-    <!-- Pan.js -->
-    <script src="../../builds/babel/pan.min.js"></script>
+    <!-- Synergy.js -->
+    <script src="../../builds/babel/synergy.min.js"></script>
 
     <script>
 
-        Pan.enableMouse();
+        Synergy.enableMouse();
 
-        Pan.mouse.on( 'move', function( position, target )
+        Synergy.mouse.on( 'move', function( position, target )
         {
             console.log( 'move', position );
 
@@ -72,9 +72,9 @@
             document.querySelector( '.element.move' ).innerHTML = text.join('');
         } );
 
-        Pan.mouse.on( 'down up', function( position, target )
+        Synergy.mouse.on( 'down up', function( position, target )
         {
-            console.log( 'down up', Pan.mouse.down );
+            console.log( 'down up', Synergy.mouse.down );
             // console.log( position);
 
 
@@ -91,7 +91,7 @@
             text.push( 'down' );
             text.push( '</td>' );
             text.push( '<td class="value">' );
-            text.push( Pan.mouse.down ? 'true' : 'false' );
+            text.push( Synergy.mouse.down ? 'true' : 'false' );
             text.push( '</td>' );
             text.push( '</tr>' );
 
@@ -100,9 +100,9 @@
             // Add to DOM
             document.querySelector( '.element.down' ).innerHTML = text.join('');
         } );
-        Pan.mouse.trigger( 'down' );
+        Synergy.mouse.trigger( 'down' );
 
-        Pan.mouse.on( 'wheel', function( wheel )
+        Synergy.mouse.on( 'wheel', function( wheel )
         {
             var text = [];
 
