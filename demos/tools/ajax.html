@@ -36,10 +36,21 @@
     ajax.getJson('http://jsonplaceholder.typicode.com/comments?postId=1').then(function(data){
       console.log(data);
     }, 
+
+    
     
     function(error){
 
     });
+
+    ajax.getJson('http://jsonplaceholder.typicode.com/posts/1').then(
+        (value) => {
+            console.log(value);
+        },
+        function (reason) {
+            console.error(reason);
+        }
+    );
     // console.log(ajax.getJson('http://jsonplaceholder.typicode.com/posts/1').request)
     // ajax.getJson('http://unreal.io/work');
     // ajax.getJson('./browser.html');
